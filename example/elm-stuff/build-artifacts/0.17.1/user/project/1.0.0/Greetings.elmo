@@ -1,0 +1,58 @@
+var _user$project$Greetings$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('greeting')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text(model)
+			]));
+};
+var _user$project$Greetings$greetings = _elm_lang$core$Native_List.fromArray(
+	['\'Allo', '\'Allo \'Allo', 'Aye oop', 'Ay up', 'Ahoy', 'G\'day', 'Greetings', 'Hello', 'Hey there', 'Hey', 'Hi there', 'Hi', 'Hiya', 'How are things', 'How are ya', 'How ya doin\'', 'How\'s it goin\'', 'How\'s it going', 'How\'s life', 'Howdy', 'Sup', 'What\'s new', 'What\'s up', 'Yo']);
+var _user$project$Greetings$getGreeting = F2(
+	function (num, model) {
+		var arr = _elm_lang$core$Array$fromList(_user$project$Greetings$greetings);
+		return A2(
+			_elm_lang$core$Maybe$withDefault,
+			model,
+			A2(_elm_lang$core$Array$get, num, arr));
+	});
+var _user$project$Greetings$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		return {
+			ctor: '_Tuple2',
+			_0: A2(_user$project$Greetings$getGreeting, _p0._0, model),
+			_1: _elm_lang$core$Platform_Cmd$none
+		};
+	});
+var _user$project$Greetings$model = '';
+var _user$project$Greetings$SetRandomInt = function (a) {
+	return {ctor: 'SetRandomInt', _0: a};
+};
+var _user$project$Greetings$getRandomInt = function (length) {
+	return A2(
+		_elm_lang$core$Random$generate,
+		_user$project$Greetings$SetRandomInt,
+		A2(_elm_lang$core$Random$int, 1, length));
+};
+var _user$project$Greetings$init = {
+	ctor: '_Tuple2',
+	_0: _user$project$Greetings$model,
+	_1: _user$project$Greetings$getRandomInt(
+		_elm_lang$core$List$length(_user$project$Greetings$greetings))
+};
+var _user$project$Greetings$main = {
+	main: _elm_lang$html$Html_App$program(
+		{
+			init: _user$project$Greetings$init,
+			view: _user$project$Greetings$view,
+			update: _user$project$Greetings$update,
+			subscriptions: function (_p1) {
+				return _elm_lang$core$Platform_Sub$none;
+			}
+		})
+};
