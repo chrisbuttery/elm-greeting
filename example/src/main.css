@@ -1,0 +1,26 @@
+html, body {
+  height: 100%;
+}
+
+body {
+  background: #000;
+  margin: 0;
+}
+
+#root {
+  align-items: center;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+}
+
+.greeting {
+  color: white;
+  font-size: 2em;
+  font-weight: normal;
+  line-height: 1.5;
+  text-align: center;
+  font-family: 'Open Sans', sans-serif;
+}
