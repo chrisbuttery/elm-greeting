@@ -1,19 +1,24 @@
 module Main exposing (..)
 
-import Html exposing (text, Html, div)
-import Html.Attributes exposing (class)
+import Html exposing (text, Html, div, span)
+import Html.Attributes exposing (classList)
 import Html.App as HA
 import Greeting
+import Task
+import Process
+import Time
 
 
 type alias Model =
     { greeting : Greeting.Model
+    , visible : Bool
     }
 
 
 model : Model
 model =
     { greeting = Greeting.model
+    , visible = False
     }
 
 
@@ -23,11 +28,13 @@ init =
         ( str, msg ) =
             Greeting.init
     in
-        ( model, Cmd.map GreetingMsg msg )
+        ( model, Cmd.batch [ Cmd.map GreetingMsg msg, delayVisibility ] )
 
 
 type Msg
     = GreetingMsg Greeting.Msg
+    | Visible Bool
+    | NoOp ()
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -42,6 +49,19 @@ update msg model =
                 , Cmd.map GreetingMsg progressCmd
                 )
 
+        NoOp _ ->
+            ( model, Cmd.none )
+
+        Visible bool ->
+            ( { model | visible = bool }, Cmd.none )
+
+
+delayVisibility : Cmd Msg
+delayVisibility =
+    Task.perform NoOp Visible
+        <| Process.sleep (1 * Time.second)
+        `Task.andThen` \_ -> Task.succeed True
+
 
 renderGreeting : Model -> Html Msg
 renderGreeting model =
@@ -50,8 +70,14 @@ renderGreeting model =
 
 view : Model -> Html Msg
 view model =
-    div [ class "app" ]
+    div
+        [ classList
+            [ ( "app", True )
+            , ( "visible", model.visible )
+            ]
+        ]
         [ renderGreeting model
+        , span [] [ text ", how are you?" ]
         ]
 
 
