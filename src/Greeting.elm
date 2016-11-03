@@ -24,7 +24,7 @@ module Greeting exposing (..)
 @docs greetings
 -}
 
-import Html exposing (text, Html, div)
+import Html exposing (text, Html, span)
 import Html.Attributes exposing (class)
 import Html.App as HA
 import Random
@@ -113,7 +113,7 @@ update msg model =
 -}
 view : Model -> Html Msg
 view model =
-    div [ class "greeting" ]
+    span [ class "greeting" ]
         [ text model
         ]
 
